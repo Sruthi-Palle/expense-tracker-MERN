@@ -1,23 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [form, setForm] = useState({
+    amount: 0,
+    description: "",
+    date: "",
+  });
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(form);
+  };
+  const handleInput = (e) => {
+    //console.log(e.target.value);
+
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="number"
+          name="amount"
+          value={form.amount}
+          placeholder="Enter transaction amount"
+          onChange={handleInput}
+        />
+        <input
+          type="text"
+          name="description"
+          value={form.description}
+          placeholder="Enter transaction details"
+          onChange={handleInput}
+        />
+        <input
+          type="date"
+          name="date"
+          value={form.date}
+          onChange={handleInput}
+        />
+        <button type="submit">Submit</button>
+      </form>
     </div>
   );
 }
