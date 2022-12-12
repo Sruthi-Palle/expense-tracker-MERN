@@ -1,10 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import bodyParser from "body-parser";
+import Transaction from "./models/transaction";
 
 const app = express();
 
 app.use(cors());
+app.use(bodyParser.json());
+
 mongoose.set("strictQuery", true);
 await mongoose
   .connect(
@@ -16,6 +20,19 @@ await mongoose
 app.get("/", (req, res) => {
   res.send("Hello world sruthi");
 });
+
+app.post("/transaction", async (req, res) => {
+  console.log(req.body);
+  const { amount, description, date } = req.body;
+  const transaction = new Transaction({
+    amount: amount,
+    description: description,
+    date: date,
+  });
+  await transaction.save();
+  res.json({ message: "success" });
+});
+
 app.listen(4000, () => {
   console.log("Server is running at local host 4000");
 });

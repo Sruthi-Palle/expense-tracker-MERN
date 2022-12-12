@@ -11,9 +11,12 @@ function App() {
     //console.log(form);
     const res = await fetch("http://localhost:4000/transaction", {
       method: "POST",
-      body: form,
+      body: JSON.stringify(form),
+      headers: { "content-type": "application/json" },
     });
+    const data = await res.json();
     console.log(res);
+    console.log(data);
   };
 
   const handleInput = (e) => {
